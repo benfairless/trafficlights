@@ -11,8 +11,8 @@
 #                                                   "Y88888P'                o888o      `Y8P'
 
 import os
-from trafficlights import create_app, db
-from flask.ext.script import Manager, Shell
+from trafficlights import create_app
+from flask_script import Manager, Shell, Command
 
 # Initiate new application using the create_app function
 app = create_app(os.getenv('TRAFFICLIGHT_CONFIG') or 'default')
@@ -21,8 +21,10 @@ manager = Manager(app)
 def make_shell_context():
     return dict(app=app)
 
-manager.add_command('shell', Shell(make_context=make_shell_context))
-manager.add_command('print', print('Test'))
+manager.add_command("shell", Shell(make_context=make_shell_context))
 
+# If you want to run administrative commands, or the debug server just run this
+# script directly. If you want to access the WSGI application (for example with
+# Gunicorn), just access manage:app directly.
 if __name__ == '__main__':
     manager.run()

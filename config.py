@@ -24,7 +24,7 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SECRET_KEY = 'changeme'
-    SQLALCHEMY_DATABASE_URI = 'sqllite:///' + os.path.join(basedir, 'development.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'development.db')
 
 
 # Configuration dictionary, provides easy access to different configurations

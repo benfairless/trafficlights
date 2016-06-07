@@ -1,5 +1,5 @@
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from config import config
 
 # Initialise empty objects
@@ -23,7 +23,3 @@ def create_app(config_name):
     # Return the Flask application object, meaning that calling init_app is
     # enough to expose the Flask object.
     return app
-
-if __name__ == '__main__':
-    app = create_app('default')
-    app.run(host='0.0.0.0')
