@@ -1,0 +1,32 @@
+#                 o8o      .    o8o
+#                 `"'    .o8    `"'
+#      .oooooooo oooo  .o888oo oooo   .oooooooo ooo. .oo.    .ooooo.  oooo d8b  .ooooo.
+#     888' `88b  `888    888   `888  888' `88b  `888P"Y88b  d88' `88b `888""8P d88' `88b
+#     888   888   888    888    888  888   888   888   888  888   888  888     888ooo888
+# .o. `88bod8P'   888    888 .  888  `88bod8P'   888   888  888   888  888     888    .o
+# Y8P `8oooooo.  o888o   "888" o888o `8oooooo.  o888o o888o `Y8bod8P' d888b    `Y8bod8P'
+#     d"     YD                      d"     YD
+#     "Y88888P'                      "Y88888P'
+
+
+
+# Project-specific
+venv/
+
+# Python-specific
+**/*.py[cod]
+**/__pycache__/
+
+# OS-specifc
+**/._*
+**/.DS_Store
+**/.Spotlight-V100
+**/.Trashes
+**/*.lnk
+**/Desktop.ini
+**/Thumbs.db
+
+# Common editor extensions
+**/*.bak
+**/*.lock
+**/*.tmp
