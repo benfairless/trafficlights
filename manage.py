@@ -9,19 +9,22 @@
 # o888o o888o o888o `Y888""8o o888o o888o `Y888""8o `8oooooo.  `Y8bod8P' Y8P  888bod8P'     .8'
 #                                                   d"     YD                 888       .o..P'
 #                                                   "Y88888P'                o888o      `Y8P'
-
+#
 import os
-from trafficlights import create_app
-from flask_script import Manager, Shell, Command
+from trafficlights import create_app, db
+from flask_script  import Manager, Shell, Command
+from flask_migrate import Migrate, MigrateCommand
 
 # Initiate new application using the create_app function
-app = create_app(os.getenv('TRAFFICLIGHT_CONFIG') or 'default')
+app     = create_app(os.getenv('TRAFFICLIGHT_CONFIG') or 'default')
 manager = Manager(app)
+migrate = Migrate(app, db)
 
 def make_shell_context():
-    return dict(app=app)
+    return dict(app=app, db=db)
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
+manager.add_command('db', MigrateCommand)
 
 # If you want to run administrative commands, or the debug server just run this
 # script directly. If you want to access the WSGI application (for example with

@@ -20,6 +20,6 @@ def create_app(config_name):
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    # Return the Flask application object, meaning that calling init_app is
+    # Return the Flask application object, meaning that calling create_app is
     # enough to expose the Flask object.
     return app

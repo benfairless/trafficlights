@@ -12,6 +12,7 @@
 
 # Project-specific
 venv/
+development.db
 
 # Python-specific
 **/*.py[cod]

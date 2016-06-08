@@ -1,6 +1,6 @@
 Flask
 Flask-SQLAlchemy
-#Flask-Migrate
+Flask-Migrate
 Flask-Script
-Jinja2
+#Jinja2
 requests

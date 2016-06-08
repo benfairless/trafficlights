@@ -1,4 +1,5 @@
 from flask import Blueprint
+from ..models import Check, Service, Result
 
 # Create a new Flask blueprint called 'main'.
 main = Blueprint('main', __name__)
