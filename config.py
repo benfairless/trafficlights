@@ -27,9 +27,15 @@ class DevelopmentConfig(Config):
     SECRET_KEY = 'changeme'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'development.db')
 
+class ProductionConfig(Config):
+    DEBUG = False
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
+
 
 # Configuration dictionary, provides easy access to different configurations
 config = {
+    'production':  ProductionConfig,
     'development': DevelopmentConfig,
-    'default': DevelopmentConfig
+    'default':     DevelopmentConfig
 }
