@@ -1,7 +1,6 @@
 import requests
 from datetime import datetime
 
-
 # HealthCheck object which carries out HTTP requests and records useful
 # information about each request.
 class  HealthCheck:
