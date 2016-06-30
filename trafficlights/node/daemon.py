@@ -1,18 +1,9 @@
-from worker import WorkProcessor
+from checks import Agent, HealthCheck
 from time import sleep
 
+client = Agent('http://localhost:5000')
 
-def PutResults(data):
-    print(data[0])
-    return True
-
-
-def Daemon():
-    # Run forever, like all good daemons!
-    # while True:
-        tasklist = GetWorkList()
-        results = WorkProcessor(tasklist)
-        PutResults(results)
-        # sleep(10)
-
-Daemon()
+if client.test():
+    while True:
+        client.process()
+        sleep(300)
