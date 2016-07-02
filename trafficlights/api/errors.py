@@ -1,16 +1,25 @@
-from flask import render_template
+from flask import jsonify
 from . import api
+from ..exceptions import ValidationError
 
-# Error handlers defined here within the @main namespace are only used by the
-# main blueprint. To use them application wide error handlers should use the
-# global @app_errorhandler decorator.
+# Error handlers defined here within the @api namespace are only used by the
+# api blueprint.
 
-@api.app_errorhandler(404)
-def page_not_found(error):
-    # return render_template('404.html'), 404
-    return '404'
+def bad_request(message):
+    response = jsonify({'error': 'bad request', 'message': message})
+    response.status_code = 400
+    return response
 
-@api.app_errorhandler(500)
-def internal_server_error(error):
-    # return render_template('500.html'), 500
-    return '500'
+def unauthorized(message):
+    response = jsonify({'error': 'unauthorized', 'message': message})
+    response.status_code = 401
+    return response
+
+def forbidden(message):
+    response = jsonify({'error': 'forbidden', 'message': message})
+    response.status_code = 403
+    return response
+
+@api.errorhandler(ValidationError)
+def validation_error(e):
+    return bad_request(e.args[0])

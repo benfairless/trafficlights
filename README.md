@@ -21,3 +21,7 @@ python manage.py runserver
  - Clean up agent side.
  - Add agent into management script.
  - Explore options for object storage.
+
+## api
+  - custom error handlers for api using json response.
+  - setup authentication.
