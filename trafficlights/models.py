@@ -1,7 +1,47 @@
 from flask import current_app, url_for
 from flask_sqlalchemy import SQLAlchemy
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
 from trafficlights import db
+
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
+class User(db.Model):
+    """
+    User accounts are used mainly to set up TrafficLights agents for now.
+    """
+
+    __tablename__ = 'users'
+    id            = db.Column(db.Integer, primary_key=True)
+    username      = db.Column(db.String(80))
+    password_hash = db.Column(db.String(156))
+    displayname   = db.Column(db.String(80))
+
+    def __init__(self, username):
+        self.username = username
+
+    def __repr__(self):
+        return '<User %s>' % self.id
+
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password, method='pbkdf2:sha512', salt_length=8)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def to_json(self):
+        return {
+            'id':          self.id,
+            'username':    self.username,
+            'displayname': self.realname
+        }
+
 
 class Node(db.Model):
     """
@@ -10,9 +50,9 @@ class Node(db.Model):
     """
 
     __tablename__ = 'nodes'
-    id      = db.Column(db.Integer, primary_key=True)
-    name    = db.Column(db.String(80))
-    checks  = db.relationship("Check", back_populates="node")
+    id     = db.Column(db.Integer, primary_key=True)
+    name   = db.Column(db.String(80))
+    checks = db.relationship("Check", back_populates="node")
 
     def __init__(self, name):
         self.name  = name
@@ -44,6 +84,7 @@ class Node(db.Model):
             'checks': url_for('api.get_checks_for_node', id=self.id, _external=True)
         }
 
+
 class Service(db.Model):
     """
     Logical grouping of checks.
@@ -67,6 +108,7 @@ class Service(db.Model):
             'url':    url_for('api.get_service', id=self.id, _external=True),
             'checks': url_for('api.get_checks_for_service', id=self.id, _external=True)
         }
+
 
 class Check(db.Model):
     """

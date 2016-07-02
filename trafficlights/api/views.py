@@ -1,7 +1,6 @@
 from flask import render_template, url_for, request, jsonify
 from . import api
 
-from .. import interface
 from ..models import Node, Service, Check
 
 @api.route('/', methods=['GET'])
@@ -25,3 +24,11 @@ def index():
 def health():
     """Healthcheck endpoint"""
     return jsonify({'status': 'ok'})
+
+@api.route('/token', methods=['GET'])
+def get_token():
+    """STUB token generation"""
+    node = Node.query.first()
+    expiration = 300
+    token = node.generate_auth_token(expiration=expiration)
+    return jsonify({'token': token.decode('utf-8'), 'expiration': expiration})

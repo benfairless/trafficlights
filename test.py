@@ -1,5 +1,5 @@
 from trafficlights import db
-from trafficlights.models import Node, Service, Check
+from trafficlights.models import User, Node, Service, Check
 
 def run():
     nodes = [
@@ -9,21 +9,27 @@ def run():
         'node-d'
     ]
     services = [
-        'service-1',
+        'TrafficLights',
         'service-2',
         'service-3'
     ]
     checks = [
         {
-            'name': 'check-a',
-            'check': 'http://google.com/',
+            'name': 'server',
+            'check': 'https://trafficlights.herokuapp.com/api/health',
             'service': 1,
             'node': 1
         },
         {
-            'name': 'check-b',
-            'check': 'http://github.com/',
+            'name': 'local',
+            'check': 'http://localhost:5000/api/health',
             'service': 1
+        }
+    ]
+    users = [
+        {
+            'username': 'ben',
+            'realname': 'Ben'
         }
     ]
 
@@ -49,5 +55,11 @@ def run():
     s.node_id = 1
     db.session.add(s)
     db.session.commit()
+
+    # for user in users:
+    #     u = User(user['username'], 'welcome1')
+    #     u.realname = user['realname']
+    #     db.session.add(u)
+    # db.session.commit()
 
     return True

@@ -15,13 +15,16 @@ from trafficlights import create_app, db
 from flask_script  import Manager, Shell, Command
 from flask_migrate import Migrate, MigrateCommand
 
+# Import data models for easy management in the script tool.
+from trafficlights.models import User, Node
+
 # Initiate new application using the create_app function
 app     = create_app(os.getenv('TRAFFICLIGHT_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db)
 
 def make_shell_context():
-    return dict(app=app, db=db)
+    return dict(app=app, db=db, User=User, Node=Node)
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
