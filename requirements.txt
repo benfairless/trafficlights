@@ -4,3 +4,4 @@ Flask-Migrate
 Flask-Script
 #Jinja2
 requests
+gunicorn
