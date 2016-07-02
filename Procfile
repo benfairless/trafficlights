@@ -1,1 +1,1 @@
-web: python manage:app
+web: gunicorn manage:app
