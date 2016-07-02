@@ -6,4 +6,4 @@ client = Agent('http://localhost:5000')
 if client.test():
     while True:
         client.process()
-        sleep(300)
+        sleep(10)

@@ -10,6 +10,7 @@ class Agent:
 
     def __init__(self, url):
         self.url = url
+        self.token = '1234567890'
 
     def test(self):
         """
@@ -21,24 +22,13 @@ class Agent:
     def worklist(self):
         """
         Collect worklist from server. Returns list of HealthCheck objects.
-        STUB!
+        ALPHA!
         """
-        response = {
-            'checks': [
-                {
-                    'id': 5000,
-                    'url': 'http://airbnb.com/health'
-                },
-                {
-                    'id': 5001,
-                    'url': 'http://google.com/'
-                },
-                {
-                    'id': 5002,
-                    'url': 'http://github.com/'
-                }
-            ]
-        }
+        path = self.url + '/checks/' + self.token
+
+        request = requests.get(path)
+        response = json.loads(request.text)
+
         healthchecks = []
         for check in response['checks']:
             healthchecks.append(HealthCheck(check['url'],check['id']))
@@ -49,8 +39,17 @@ class Agent:
         Submit completed HealthCheck outputs to server.
         STUB!
         """
+        path = self.url + '/results/' + self.token
+        results = []
         for item in completed:
+            results.append(item.result)
             print('Submitted %s' % item)
+        data = { 'checks': results }
+        payload = json.dumps(data)
+        print(payload)
+        headers = {'Content-Type': 'application/json'}
+        r = requests.post(path, data = data, headers = headers)
+        print(r.text)
         return True
 
     def _worker(self, input_queue, output_queue):

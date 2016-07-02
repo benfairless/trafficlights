@@ -20,6 +20,10 @@ def create_app(config_name):
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    # Add the api application blueprint into the Flask application object.
+    from .api import api as api_blueprint
+    app.register_blueprint(api_blueprint, url_prefix='/api')
+
     # Return the Flask application object, meaning that calling create_app is
     # enough to expose the Flask object.
     return app

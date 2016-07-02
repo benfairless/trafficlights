@@ -1,6 +1,7 @@
 from flask import Blueprint
+from ..models import User, Service, Check, Node #, Result, Node
 
-# Create new Flask Blueprint called main
+# Create a new Flask blueprint called 'main'.
 main = Blueprint('main', __name__)
 
 # Using relative paths to import submodules allows the easy duplication of blueprint modules.
